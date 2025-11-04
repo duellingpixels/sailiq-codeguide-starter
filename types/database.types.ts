@@ -194,6 +194,410 @@ export type Database = {
                     },
                 ]
             }
+            sailing_sessions: {
+                Row: {
+                    id: string
+                    user_id: string
+                    title: string
+                    description: string | null
+                    session_type: Database["public"]["Enums"]["session_type"]
+                    boat_class: Database["public"]["Enums"]["boat_class"]
+                    location: string | null
+                    date: string
+                    duration_minutes: number | null
+                    wind_speed_knots: number | null
+                    wind_direction_degrees: number | null
+                    weather_condition: Database["public"]["Enums"]["weather_condition"] | null
+                    air_temperature_celsius: number | null
+                    water_temperature_celsius: number | null
+                    video_file_path: string | null
+                    video_file_size: number | null
+                    video_duration_seconds: number | null
+                    video_metadata: Json | null
+                    analysis_status: Database["public"]["Enums"]["analysis_status"]
+                    analysis_started_at: string | null
+                    analysis_completed_at: string | null
+                    analysis_error: string | null
+                    notes: string | null
+                    tags: string[] | null
+                    is_public: boolean
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    user_id: string
+                    title: string
+                    description?: string | null
+                    session_type?: Database["public"]["Enums"]["session_type"]
+                    boat_class: Database["public"]["Enums"]["boat_class"]
+                    location?: string | null
+                    date?: string
+                    duration_minutes?: number | null
+                    wind_speed_knots?: number | null
+                    wind_direction_degrees?: number | null
+                    weather_condition?: Database["public"]["Enums"]["weather_condition"] | null
+                    air_temperature_celsius?: number | null
+                    water_temperature_celsius?: number | null
+                    video_file_path?: string | null
+                    video_file_size?: number | null
+                    video_duration_seconds?: number | null
+                    video_metadata?: Json | null
+                    analysis_status?: Database["public"]["Enums"]["analysis_status"]
+                    analysis_started_at?: string | null
+                    analysis_completed_at?: string | null
+                    analysis_error?: string | null
+                    notes?: string | null
+                    tags?: string[] | null
+                    is_public?: boolean
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    user_id?: string
+                    title?: string
+                    description?: string | null
+                    session_type?: Database["public"]["Enums"]["session_type"]
+                    boat_class?: Database["public"]["Enums"]["boat_class"]
+                    location?: string | null
+                    date?: string
+                    duration_minutes?: number | null
+                    wind_speed_knots?: number | null
+                    wind_direction_degrees?: number | null
+                    weather_condition?: Database["public"]["Enums"]["weather_condition"] | null
+                    air_temperature_celsius?: number | null
+                    water_temperature_celsius?: number | null
+                    video_file_path?: string | null
+                    video_file_size?: number | null
+                    video_duration_seconds?: number | null
+                    video_metadata?: Json | null
+                    analysis_status?: Database["public"]["Enums"]["analysis_status"]
+                    analysis_started_at?: string | null
+                    analysis_completed_at?: string | null
+                    analysis_error?: string | null
+                    notes?: string | null
+                    tags?: string[] | null
+                    is_public?: boolean
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
+            }
+            maneuvers: {
+                Row: {
+                    id: string
+                    session_id: string
+                    maneuver_type: Database["public"]["Enums"]["maneuver_type"]
+                    start_time_seconds: number
+                    end_time_seconds: number
+                    duration_seconds: number
+                    speed_before_knots: number | null
+                    speed_after_knots: number | null
+                    speed_change_knots: number | null
+                    max_roll_angle_degrees: number | null
+                    avg_roll_angle_degrees: number | null
+                    heading_change_degrees: number | null
+                    efficiency_score: number | null
+                    technique_score: number | null
+                    overall_score: number | null
+                    ai_feedback: string | null
+                    improvement_tips: string[] | null
+                    video_clip_path: string | null
+                    keyframes: string[] | null
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    session_id: string
+                    maneuver_type: Database["public"]["Enums"]["maneuver_type"]
+                    start_time_seconds: number
+                    end_time_seconds: number
+                    duration_seconds: number
+                    speed_before_knots?: number | null
+                    speed_after_knots?: number | null
+                    speed_change_knots?: number | null
+                    max_roll_angle_degrees?: number | null
+                    avg_roll_angle_degrees?: number | null
+                    heading_change_degrees?: number | null
+                    efficiency_score?: number | null
+                    technique_score?: number | null
+                    overall_score?: number | null
+                    ai_feedback?: string | null
+                    improvement_tips?: string[] | null
+                    video_clip_path?: string | null
+                    keyframes?: string[] | null
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    session_id?: string
+                    maneuver_type?: Database["public"]["Enums"]["maneuver_type"]
+                    start_time_seconds?: number
+                    end_time_seconds?: number
+                    duration_seconds?: number
+                    speed_before_knots?: number | null
+                    speed_after_knots?: number | null
+                    speed_change_knots?: number | null
+                    max_roll_angle_degrees?: number | null
+                    avg_roll_angle_degrees?: number | null
+                    heading_change_degrees?: number | null
+                    efficiency_score?: number | null
+                    technique_score?: number | null
+                    overall_score?: number | null
+                    ai_feedback?: string | null
+                    improvement_tips?: string[] | null
+                    video_clip_path?: string | null
+                    keyframes?: string[] | null
+                    created_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "maneuvers_session_id_fkey"
+                        columns: ["session_id"]
+                        isOneToOne: false
+                        referencedRelation: "sailing_sessions"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
+            session_analytics: {
+                Row: {
+                    id: string
+                    session_id: string
+                    total_distance_nm: number | null
+                    avg_speed_knots: number | null
+                    max_speed_knots: number | null
+                    avg_vmg_knots: number | null
+                    total_tacks: number
+                    total_gybes: number
+                    total_mark_roundings: number
+                    avg_tack_time_seconds: number | null
+                    avg_gybe_time_seconds: number | null
+                    avg_tack_speed_loss_percent: number | null
+                    avg_gybe_speed_loss_percent: number | null
+                    overall_session_score: number | null
+                    technique_score: number | null
+                    strategy_score: number | null
+                    percentile_vs_class: number | null
+                    areas_for_improvement: string[] | null
+                    strengths: string[] | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    session_id: string
+                    total_distance_nm?: number | null
+                    avg_speed_knots?: number | null
+                    max_speed_knots?: number | null
+                    avg_vmg_knots?: number | null
+                    total_tacks?: number
+                    total_gybes?: number
+                    total_mark_roundings?: number
+                    avg_tack_time_seconds?: number | null
+                    avg_gybe_time_seconds?: number | null
+                    avg_tack_speed_loss_percent?: number | null
+                    avg_gybe_speed_loss_percent?: number | null
+                    overall_session_score?: number | null
+                    technique_score?: number | null
+                    strategy_score?: number | null
+                    percentile_vs_class?: number | null
+                    areas_for_improvement?: string[] | null
+                    strengths?: string[] | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    session_id?: string
+                    total_distance_nm?: number | null
+                    avg_speed_knots?: number | null
+                    max_speed_knots?: number | null
+                    avg_vmg_knots?: number | null
+                    total_tacks?: number
+                    total_gybes?: number
+                    total_mark_roundings?: number
+                    avg_tack_time_seconds?: number | null
+                    avg_gybe_time_seconds?: number | null
+                    avg_tack_speed_loss_percent?: number | null
+                    avg_gybe_speed_loss_percent?: number | null
+                    overall_session_score?: number | null
+                    technique_score?: number | null
+                    strategy_score?: number | null
+                    percentile_vs_class?: number | null
+                    areas_for_improvement?: string[] | null
+                    strengths?: string[] | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "session_analytics_session_id_fkey"
+                        columns: ["session_id"]
+                        isOneToOne: true
+                        referencedRelation: "sailing_sessions"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
+            weather_data: {
+                Row: {
+                    id: string
+                    session_id: string
+                    timestamp: string
+                    wind_speed_knots: number
+                    wind_direction_degrees: number
+                    wind_gusts_knots: number | null
+                    temperature_celsius: number | null
+                    humidity_percent: number | null
+                    pressure_mb: number | null
+                    source: string
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    session_id: string
+                    timestamp: string
+                    wind_speed_knots: number
+                    wind_direction_degrees: number
+                    wind_gusts_knots?: number | null
+                    temperature_celsius?: number | null
+                    humidity_percent?: number | null
+                    pressure_mb?: number | null
+                    source?: string
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    session_id?: string
+                    timestamp?: string
+                    wind_speed_knots?: number
+                    wind_direction_degrees?: number
+                    wind_gusts_knots?: number | null
+                    temperature_celsius?: number | null
+                    humidity_percent?: number | null
+                    pressure_mb?: number | null
+                    source?: string
+                    created_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "weather_data_session_id_fkey"
+                        columns: ["session_id"]
+                        isOneToOne: false
+                        referencedRelation: "sailing_sessions"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
+            class_benchmarks: {
+                Row: {
+                    id: string
+                    boat_class: Database["public"]["Enums"]["boat_class"]
+                    maneuver_type: Database["public"]["Enums"]["maneuver_type"]
+                    metric_name: string
+                    metric_value: number
+                    sample_size: number
+                    percentile_25: number | null
+                    percentile_50: number | null
+                    percentile_75: number | null
+                    percentile_90: number | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    boat_class: Database["public"]["Enums"]["boat_class"]
+                    maneuver_type: Database["public"]["Enums"]["maneuver_type"]
+                    metric_name: string
+                    metric_value: number
+                    sample_size: number
+                    percentile_25?: number | null
+                    percentile_50?: number | null
+                    percentile_75?: number | null
+                    percentile_90?: number | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    boat_class?: Database["public"]["Enums"]["boat_class"]
+                    maneuver_type?: Database["public"]["Enums"]["maneuver_type"]
+                    metric_name?: string
+                    metric_value?: number
+                    sample_size?: number
+                    percentile_25?: number | null
+                    percentile_50?: number | null
+                    percentile_75?: number | null
+                    percentile_90?: number | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
+            }
+            analysis_jobs: {
+                Row: {
+                    id: string
+                    session_id: string
+                    status: Database["public"]["Enums"]["analysis_status"]
+                    priority: number
+                    retry_count: number
+                    max_retries: number
+                    error_message: string | null
+                    processing_started_at: string | null
+                    processing_completed_at: string | null
+                    estimated_completion: string | null
+                    progress_percentage: number
+                    current_step: string | null
+                    worker_id: string | null
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    session_id: string
+                    status?: Database["public"]["Enums"]["analysis_status"]
+                    priority?: number
+                    retry_count?: number
+                    max_retries?: number
+                    error_message?: string | null
+                    processing_started_at?: string | null
+                    processing_completed_at?: string | null
+                    estimated_completion?: string | null
+                    progress_percentage?: number
+                    current_step?: string | null
+                    worker_id?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    session_id?: string
+                    status?: Database["public"]["Enums"]["analysis_status"]
+                    priority?: number
+                    retry_count?: number
+                    max_retries?: number
+                    error_message?: string | null
+                    processing_started_at?: string | null
+                    processing_completed_at?: string | null
+                    estimated_completion?: string | null
+                    progress_percentage?: number
+                    current_step?: string | null
+                    worker_id?: string | null
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "analysis_jobs_session_id_fkey"
+                        columns: ["session_id"]
+                        isOneToOne: false
+                        referencedRelation: "sailing_sessions"
+                        referencedColumns: ["id"]
+                    }
+                ]
+            }
         }
         Views: {
             [_ in never]: never
@@ -216,6 +620,11 @@ export type Database = {
             | "past_due"
             | "unpaid"
             | "paused"
+            session_type: "training" | "race" | "regatta" | "practice"
+            boat_class: "cadet" | "ilca_4" | "ilca_6" | "ilca_7" | "tasar" | "29er" | "420" | "other"
+            maneuver_type: "tack" | "gybe" | "start" | "mark_rounding" | "sail_change" | "other"
+            analysis_status: "pending" | "processing" | "completed" | "failed" | "retrying"
+            weather_condition: "light" | "moderate" | "fresh" | "strong" | "extreme"
         }
         CompositeTypes: {
             [_ in never]: never
